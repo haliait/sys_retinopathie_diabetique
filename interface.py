@@ -173,7 +173,7 @@ def load_model(model_path):
         nn.Dropout(p=0.2),
         nn.Linear(512, NUM_CLASSES)
     )
-    model.set_classifier(head)
+    model.fc=head
 
     # Chargement des poids sauvegardés
     checkpoint = torch.load(model_path,
