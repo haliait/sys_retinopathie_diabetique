@@ -158,22 +158,11 @@ def load_model(model_path):
     """
     # Backbone sans tête de classification
     model = timm.create_model(
-        'resnet18',
-        pretrained=False,
-        num_classes=0,        # supprime la tête originale
-        global_pool='avg'
-    )
+    'resnet18',
+    pretrained=False,
+    num_classes=NUM_CLASSES   
+)
     in_features = model.num_features  # 512 pour ResNet-18
-
-    # Tête personnalisée — identique à Phase 4
-    head = nn.Sequential(
-        nn.Dropout(p=0.3),
-        nn.Linear(in_features, 512),
-        nn.SiLU(),
-        nn.Dropout(p=0.2),
-        nn.Linear(512, NUM_CLASSES)
-    )
-    model.fc=head
 
     # Chargement des poids sauvegardés
     checkpoint = torch.load(model_path,
